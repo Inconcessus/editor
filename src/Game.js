@@ -1066,7 +1066,9 @@ Editor.prototype.LoadResources = function() {
 
       self.resources[resource.file] = image;
 
-      if(++nResourcesLoaded >= self.resourceLoadChain.length - 1) {
+      // Just load ten resources for now
+      if(++nResourcesLoaded >= 10) {
+      //if(++nResourcesLoaded >= self.resourceLoadChain.length - 1) {
         self.LoadResourcesCallback();
       } else {
         fn();
