@@ -1045,8 +1045,7 @@ Editor.prototype.LoadResources = function() {
   nResourcesLoaded = 1;
 
   // Determine the resource load chain
-  this.resourceLoadChain = CATALOG_CONTENT;
-  
+  this.resourceLoadChain = CATALOG_CONTENT.slice(1900);
   var self = this;
   var fn;
 
@@ -1067,8 +1066,8 @@ Editor.prototype.LoadResources = function() {
       self.resources[resource.file] = image;
 
       // Just load ten resources for now
-      if(++nResourcesLoaded >= 10) {
-      //if(++nResourcesLoaded >= self.resourceLoadChain.length - 1) {
+      if(++nResourcesLoaded >= self.resourceLoadChain.length - 1) {
+        self.inventory.viewport.j = 1180;
         self.LoadResourcesCallback();
       } else {
         fn();
@@ -1442,6 +1441,10 @@ Editor.prototype.Draw = function(tileObject, worldTile, elevation) {
   }
 
   var sprite = object.sprites[spriteIndex];
+
+  if(this.resources[sprite.resource] === undefined) {
+    return;
+  }
 
   // Draw the image and correct for the zoom level,
   // sprite size, and object elevation
